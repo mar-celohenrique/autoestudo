@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<link href="/webjars/materializecss/0.97.7/css/materialize.css"
+	type="text/css" rel="stylesheet" media="screen,projection" />
+
+<title>FutManager</title>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row valign-wrapper">
+			<div class="col s6">
+				<h3>Gerenciar Jogadores</h3>
+			</div>
+			<div class="col s6">
+				<a href="/times/"
+					class="valign btn-large waves-effect waves-light teal right">Gerenciar
+					Times</a>
+			</div>
+		</div>
+		<div class="col s6">
+			<h4>Adicionar Novo Jogador</h4>
+		</div>
+		<div class="row valign-wrapper">
+			<form th:action="@{/jogadores/salvar}" method="POST">
+				<div class="col s4">
+					<label for="fist_name">Nome do Jogador</label> <input type="text"
+						class="form-control" placeholder="Nome do Jogador" name="nome"/>
+				</div>
+				<div class="col s4">
+					<label for="fist_name">Idade do Jogador</label> <input type="text"
+						class="form-control" placeholder="Idade" name="idade"/>
+				</div>
+				<div class="col s4">
+				<button class="btn waves-effect waves-light" type="submit"
+					name="action">Adicionar</button>
+			</div>
+			</form>
+
+		</div>
+		<div class="row">
+			<h5>Jogadores Cadastrados</h5>
+			<table class="striped">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Time</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="jogador : ${jogadores}">
+						<td th:text="${jogador.nome}"></td>
+						<td th:if="${jogador.time != null}" th:text="${jogador.time.nome}"></td>
+						<td th:if="${jogador.time == null}">Jogador Sem Time</td>
+						<td><a class="waves-effect waves-teal btn-flat" th:href="@{/jogadores/excluir/{id}(id=${jogador.id})}">X</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+
+
+</body>
+
+<script src="/webjars/jquery/2.2.4/jquery.js"></script>
+<script src="/webjars/materializecss/0.97.7/js/materialize.js"></script>
+</html>
